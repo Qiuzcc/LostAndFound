@@ -1,6 +1,6 @@
 <template>
   <router-link :to="{ name: routeName, params: { id } }">
-    <el-card :body-style="{ padding: '0px' }">
+    <el-card :body-style="{ padding: '0px' }" shadow="hover" class="card">
       <img :src="model.photos[0]" class="image" />
       <div style="padding: 14px" class="card_text">
         <div>
@@ -12,7 +12,7 @@
           <span class="right campus">{{ model.campus }}</span>
         </div>
         <div>
-          <span class="left time">{{ model.time }}</span>
+          <span class="left time">{{ time }}</span>
           <span class="right location">{{ model.type }}</span>
         </div>
       </div>
@@ -23,6 +23,8 @@
 <style scoped>
 .image {
   width: 100%;
+  height: 300px;
+  object-fit: cover;
   display: block;
 }
 .left {
@@ -44,11 +46,22 @@
 .status {
   font-size: 0.8rem;
 }
+.card {
+  width:300px;
+  height: 400px;
+}
 </style>
 
 <script>
 export default {
   name: "card-item",
   props: ["model", "routeName", "id"],
+  computed:{
+    time(){
+      const start = this.model.time.indexOf('-')
+      const end = this.model.time.indexOf('T')
+      return this.model.time.slice(start+1,end)
+    }
+  }
 };
 </script>

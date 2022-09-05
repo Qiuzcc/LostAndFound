@@ -1,7 +1,7 @@
 <template>
   <div v-if="this.card_list.length > 0">
-    <el-row v-for="card_cols in card_rows" :key="card_cols[0]._id" >
-      <el-col v-for="(obj,index) in card_cols" :key="index" :span="4" :offset="index>0?1:0">
+    <el-row v-for="card_cols in card_rows" :key="card_cols[0]._id" style="margin-top:10px">
+      <el-col v-for="(obj,index) in card_cols" :key="index" :span="5" :offset="index>0?1:0">
         <card-item :model="obj" :routeName="routeName" :id=obj._id></card-item>
       </el-col>
     </el-row>
@@ -20,7 +20,7 @@ export default {
       var arr = [],
         temp = [];
       for (var index in this.card_list) {
-        if (index % 5 === 0 && temp.length) {
+        if (index % 4 === 0 && temp.length) {
           arr.push(temp);
           temp = [];
         }

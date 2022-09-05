@@ -65,6 +65,7 @@ import PhotoUploader from "./PhotoUploader.vue"
 import { mapGetters } from "vuex"
 import {addLost} from '@/api/lost'
 import {addFound} from '@/api/found'
+import NProgress from 'nprogress'
 export default {
   components: { PhotoUploader },
   computed:{
@@ -101,6 +102,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(async () => {
+        NProgress.start()
         await this.$refs.photoUploader.submitUpload(); //等待图片完成上传
         this.form.photos = this.$refs.photoUploader.urlList; //获取图片上传成功后回调传回来的URL
         // console.log(this.form);
@@ -121,6 +123,7 @@ export default {
             this.$message.error("噢哦，出错了！")
           })
         }
+        NProgress.done()
       }).catch(()=>{
         this.$message({
           type:'info',

@@ -7,7 +7,10 @@ import { Message } from 'element-ui'
 import router from '@/router'
 
 const service = axios.create({
-    baseURL: 'http://localhost:3000/api/laf',   // url = base url + request url
+    // url = base url + request url
+    baseURL: process.env.VUE_APP_BASE_API,
+    // baseURL: 'http://120.25.75.176:3000/api/laf',
+    // baseURL: 'http://localhost:3000/api/laf',
     timeout: 5000
 })
 
@@ -16,8 +19,10 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
         const token = getToken()
+        
         if (token) {
-            config.headers['X-Access-Token'] = token    //传递到后端之后X-Access-Token这个key会转换为全部小写
+            // console.log('request拦截器',token)
+            config.headers['x-access-token'] = token    //传递到后端之后X-Access-Token这个key会转换为全部小写
         }
         return config
     },

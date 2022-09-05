@@ -18,7 +18,8 @@ const routes = [
           {
             path:'',
             name: 'lost',
-            component: () => import('@/views/lost/List')
+            component: () => import('@/views/lost/List'),
+            meta: {title:'失物招领'}
           },{
             path:'detail',
             name: 'lost-detail',
@@ -33,7 +34,8 @@ const routes = [
           {
             path: '',
             name: 'found',
-            component: () => import('@/views/found/List')
+            component: () => import('@/views/found/List'),
+            meta: {title:'寻物启事'}
           },{
             path:'detail/:id',
             name:'found-detail',
@@ -44,12 +46,14 @@ const routes = [
       {
         path: 'help',
         name: 'help',
-        component: () => import('@/views/help/index')
+        component: () => import('@/views/help/index'),
+        meta: {title:'帮助 & 联系我们'}
       },
       {
         path: 'user',
         name: 'user',
-        component: () => import('@/views/user/index')
+        component: () => import('@/views/user/index'),
+        meta: {title:'个人中心'}
       }
     ]
   },

@@ -37,16 +37,19 @@ const mutations = {
 
 const actions = {
     getInfo({ commit }) {
-        getUserInfo().then(res => {
-            const { data } = res
-            commit('SET_USERNAME', data.username)
-            commit('SET_PASSWORD', data.password)
-            commit('SET_NAME', data.name)
-            commit('SET_AVATAR', data.avatar)
-            commit('SET_EMAIL', data.email)
-        }).catch(err => {
-            console.error(err)
-            console.error('获取用户信息失败！')
+        return new Promise((resolve, reject) => {
+            getUserInfo().then(res => {
+                const { data } = res
+                commit('SET_USERNAME', data.username)
+                commit('SET_PASSWORD', data.password)
+                commit('SET_NAME', data.name)
+                commit('SET_AVATAR', data.avatar)
+                commit('SET_EMAIL', data.email)
+                resolve()
+            }).catch(err => {
+                console.error('获取用户信息失败！')
+                reject(err)
+            })
         })
     },
     logout({ commit }) {
@@ -60,18 +63,18 @@ const actions = {
             })
         })
     },
-    updateInfo({commit},payload){   //payload的格式如：{name:'Q'}，每次只会传入一个key-value对,key的范围在数据库已有key中
-        return new Promise((resolve, reject)=>{
-            updateInfo(payload).then(()=>{
+    updateInfo({ commit }, payload) {   //payload的格式如：{name:'Q'}，每次只会传入一个key-value对,key的范围在数据库已有key中
+        return new Promise((resolve, reject) => {
+            updateInfo(payload).then(() => {
                 const key = Object.keys(payload)[0]
-                switch(key){
-                    case 'name':commit('SET_NAME',payload[key]);break;
-                    case 'password':commit('SET_PASSWORD',payload[key]);break;
-                    case 'avatar':commit('SET_AVATAR',payload[key]);break;
-                    case 'email':commit('SET_EMAIL',payload[key]);break;
+                switch (key) {
+                    case 'name': commit('SET_NAME', payload[key]); break;
+                    case 'password': commit('SET_PASSWORD', payload[key]); break;
+                    case 'avatar': commit('SET_AVATAR', payload[key]); break;
+                    case 'email': commit('SET_EMAIL', payload[key]); break;
                 }
                 resolve()
-            }).catch(err=>{
+            }).catch(err => {
                 reject(err)
             })
         })

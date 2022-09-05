@@ -75,11 +75,13 @@ export default {
     handleLogin() {
       this.loading = true;
       login(this.loginForm)
-        .then((res) => {
+        .then(async (res) => {
           // console.log(res)//res是一个包含了data、status、headers等属性的对象
           const { token } = res.data;
+          // console.log('handleLogin1',token)
           setToken(token);
-          this.$store.dispatch("user/getInfo"); //异步获取用户信息，不必等待，加载成功后响应式显示在页面，错误处理放置到了actions里
+          // console.log('handleLogin2',getToken())
+          await this.$store.dispatch("user/getInfo"); //异步获取用户信息，不必等待，加载成功后响应式显示在页面，错误处理放置到了actions里
           this.$router.push({ path: "/user" }); //这里暂时先跳转到个人中心，后续优化可以跳转到触发登录要前到的页面
         })
         .catch((err) => {
